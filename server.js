@@ -86,6 +86,15 @@ app.use((err, req, res, next) => {
 
 // ── Start server ───────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
+// One-time seed endpoint
+app.get('/api/seed-now', async (req, res) => {
+  try {
+    require('./db/seed');
+    res.json({ message: 'Database seeded!' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 app.listen(PORT, () => {
   console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   console.log('  🎓 CovenantBuys API');
